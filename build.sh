@@ -21,3 +21,4 @@ go build -o ./bin/cm_p_truncate ./processors/truncate
 
 # outputs
 go build -o ./bin/cm_o_telegram ./outputs/telegram
+go build -o ./bin/cm_o_opsgenie ./outputs/opsgenie
