@@ -50,8 +50,7 @@ func main() {
 	}
 
 	for {
-		text, err := reader.ReadString(utils.EOT_B)
-		utils.CatchError(err)
+		text, _ := utils.GetNewLine(reader)
 
 		mutex.Lock()
 

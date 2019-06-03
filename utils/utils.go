@@ -1,10 +1,13 @@
 package utils
 
 import (
+	"bufio"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/go-ini/ini"
+	"io"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -35,8 +38,25 @@ func UnMarshalMessage(text string) Message {
 }
 
 func CatchError(err error) {
-	if err != nil {
+	if err == nil {
+		return
+	}
+
+	if err == io.EOF {
+		log.Print("Use CatchEof for stdin processing\n")
+		os.Exit(0)
+	} else {
 		panic(err)
+	}
+}
+
+func CatchEof(err error, text string) {
+	if err == nil {
+		return
+	}
+
+	if err == io.EOF && len(text) == 0 {
+		os.Exit(0)
 	}
 }
 
@@ -113,4 +133,15 @@ func NewMessage() *Message {
 	msg.HostName = GetIniString("global", "host_name", osHostName)
 
 	return msg
+}
+
+func GetNewLine(reader *bufio.Reader) (string, error) {
+	text, err := reader.ReadString(EOT_B)
+	CatchEof(err, text)
+
+	if err == io.EOF {
+		text = strings.Trim(text, "\n") + EOT_S
+	}
+
+	return text, nil
 }

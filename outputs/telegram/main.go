@@ -19,8 +19,7 @@ func main() {
 	reader  := bufio.NewReader(os.Stdin)
 
 	for {
-		text, err := reader.ReadString(utils.EOT_B)
-		utils.CatchError(err)
+		text, err := utils.GetNewLine(reader)
 
 		bot, err := tgbotapi.NewBotAPI(options.Token)
 		utils.CatchError(err)

@@ -13,11 +13,7 @@ func main() {
 
 	for {
 		text, err := reader.ReadString('\n')
-
-		if err != nil {
-			log.Print(err)
-			os.Exit(0)
-		}
+		utils.CatchEof(err, text)
 
 		text = strings.Replace(text,"\n", utils.EOT_S, -1)
 

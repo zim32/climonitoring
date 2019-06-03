@@ -22,12 +22,7 @@ func main() {
 	options := parseOptions()
 
 	for {
-		text, err := reader.ReadString(utils.EOT_B)
-
-		if err != nil {
-			log.Print(err)
-			os.Exit(0)
-		}
+		text, err := utils.GetNewLine(reader)
 
 		var messageText string
 

@@ -18,8 +18,7 @@ func main() {
 	var lastTime int64 = 0
 
 	for {
-		text, err := reader.ReadString(utils.EOT_B)
-		utils.CatchError(err)
+		text, err := utils.GetNewLine(reader)
 
 		if time.Now().Unix() - lastTime < options.Interval {
 			continue
