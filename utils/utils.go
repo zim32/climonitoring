@@ -165,3 +165,9 @@ func GetNewLine(reader *bufio.Reader) (string, error) {
 
 	return text, nil
 }
+
+func ValidateEmptyString(val string, msg string) {
+	if len(val) == 0 {
+		panic(msg)
+	}
+}

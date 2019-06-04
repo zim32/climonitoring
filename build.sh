@@ -23,3 +23,4 @@ go build -o ./bin/cm_p_watchdog ./processors/watchdog
 # outputs
 go build -o ./bin/cm_o_telegram ./outputs/telegram
 go build -o ./bin/cm_o_opsgenie ./outputs/opsgenie
+go build -o ./bin/cm_o_smtp ./outputs/smtp

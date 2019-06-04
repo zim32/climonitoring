@@ -190,3 +190,16 @@ Name | Description | Mandatory | Default
 -apiEndpoint | Api endpoint. Example "https://api.eu.opsgenie.com/v2/alerts" | Y |
 -responderType | Responser type. F.e. "team" | Y |
 -responderId | Responser id | Y |
+
+
+##### cm_o_smtp  
+Send input data over smtp
+
+Name | Description | Mandatory | Default
+ --- | --- | --- | ---
+-host | SMTP host | Y |
+-port | SMTP port | Y |
+-userName | SMTP user name | Y |
+-userPass | SMTP user password | Y |
+-from | Send from | Y |
+-to | Send to | Y |

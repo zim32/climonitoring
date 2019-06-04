@@ -46,13 +46,12 @@ func parseOptions() *CliOptions {
 	options.ChatID = int64(*intPtr)
 	options.Token  = *strPtr
 
+
 	if options.ChatID == -1 {
 		panic("Chat ID not specified")
 	}
 
-	if len(options.Token) == 0 {
-		panic("Token not specified")
-	}
+	utils.ValidateEmptyString(options.Token, "Api token required")
 
 	return options
 }
