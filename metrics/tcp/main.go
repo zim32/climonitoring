@@ -23,11 +23,13 @@ func main() {
 	}
 
 	for {
-		_, err := net.Dial(options.Network, options.Address)
+		c, err := net.Dial(options.Network, options.Address)
 
 		if err != nil {
 			result = "false"
 		} else {
+			err = c.Close()
+			utils.CatchError(err)
 			result = "true"
 		}
 
