@@ -35,7 +35,7 @@ func main() {
 	for {
 		text, err := utils.GetNewLine(reader)
 
-		message    := utils.UnMarshalMessage(text)
+		message := utils.UnMarshalMessage(text)
 
 		// create ops message
 		opsMessage := new(OpsGenieMessage)
@@ -50,7 +50,7 @@ func main() {
 
 		postData := string(b)
 
-		req, err := http.NewRequest("POST", "https://api.eu.opsgenie.com/v2/alerts", bytes.NewBufferString(postData))
+		req, err := http.NewRequest("POST", options.ApiEndpoint, bytes.NewBufferString(postData))
 		utils.CatchError(err)
 
 		req.Header.Add("Content-Type", "application/json")

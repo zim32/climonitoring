@@ -14,6 +14,7 @@ import (
 type CliOptions struct {
 	Message  string
 	Severity string
+	HostName string
 }
 
 
@@ -39,6 +40,10 @@ func main() {
 		msg.Message  = messageText
 		msg.Created  = time.Now()
 
+		if len(options.HostName) > 0 {
+			msg.HostName = options.HostName
+		}
+
 		b, err := json.Marshal(msg)
 
 		_, err = os.Stdout.WriteString(string(b) + utils.EOT_S)
@@ -55,11 +60,13 @@ func parseOptions() *CliOptions {
 
 	strPtrM := utils.GetConfigString("m", "", "Message", "message")
 	strPtrS := utils.GetConfigString("s", "info", "Severity", "message")
+	strPtrH := utils.GetConfigString("h", "", "Host name", "message")
 
 	flag.Parse()
 
 	options.Message  = *strPtrM
 	options.Severity = *strPtrS
+	options.HostName = *strPtrH
 
 	return options
 }

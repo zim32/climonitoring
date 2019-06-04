@@ -16,8 +16,7 @@ func main() {
 	reader  := bufio.NewReader(os.Stdin)
 
 	for {
-		text, err := reader.ReadString(utils.EOT_B)
-		utils.CatchError(err)
+		text, err := utils.GetNewLine(reader)
 
 		_, err = os.Stdout.WriteString(text + utils.EOT_S)
 		utils.CatchError(err)

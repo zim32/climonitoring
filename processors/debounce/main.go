@@ -1,8 +1,8 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"bufio"
+	"climonitoring/utils"
 	"flag"
 	"os"
 	"time"

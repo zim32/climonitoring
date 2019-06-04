@@ -18,6 +18,7 @@ go build -o ./bin/cm_p_eot2nl ./processors/eot2nl
 go build -o ./bin/cm_p_nl2eot ./processors/nl2eot
 go build -o ./bin/cm_p_debounce ./processors/debounce
 go build -o ./bin/cm_p_truncate ./processors/truncate
+go build -o ./bin/cm_p_watchdog ./processors/watchdog
 
 # outputs
 go build -o ./bin/cm_o_telegram ./outputs/telegram
