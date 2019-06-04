@@ -98,6 +98,7 @@ Name | Description | Mandatory | Default
  --- | --- | --- | ---
 -e | Regular expression | N | ".*"
 -o | Output template. If given, cm_f_regex will output this string. {0} will hold whole match, {N}, where N>0 will hold N-th regex group match | N | ""
+--invert | Invert match behaviour | N | false
 
 Example:
 ````

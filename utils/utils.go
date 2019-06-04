@@ -109,6 +109,19 @@ func GetIniInt(section string, key string, def int) int  {
 	}
 }
 
+func GetIniBool(section string, key string, def bool) bool  {
+	if iniFile, ok := getConfigFilePath(); ok {
+		cfg, err := ini.Load(iniFile)
+		if err != nil {
+			return def
+		}
+
+		return cfg.Section(section).Key(key).MustBool(def)
+	} else {
+		return def
+	}
+}
+
 func GetConfigString(name string, def string, usage string, section string) *string  {
 	defVal := GetIniString(section, name, def)
 	ptr    := flag.String(name, defVal, usage)
@@ -120,6 +133,13 @@ func GetConfigString(name string, def string, usage string, section string) *str
 func GetConfigInt(name string, def int, usage string, section string) *int  {
 	defVal := GetIniInt(section, name, def)
 	ptr    := flag.Int(name, defVal, usage)
+
+	return ptr
+}
+
+func GetConfigBool(name string, def bool, usage string, section string) *bool  {
+	defVal := GetIniBool(section, name, def)
+	ptr    := flag.Bool(name, defVal, usage)
 
 	return ptr
 }
