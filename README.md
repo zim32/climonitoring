@@ -20,6 +20,7 @@
 - Outputs
     - [cm_o_telegram](#cm_o_telegram)
     - [cm_o_opsgenie](#cm_o_opsgenie)
+    - [cm_o_smtp](#cm_o_smtp)
 
 ### Reference
 
