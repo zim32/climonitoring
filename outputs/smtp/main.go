@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"climonitoring/utils"
 	"flag"
+	"fmt"
 	"net/smtp"
 	"os"
 )
@@ -24,6 +25,19 @@ func main() {
 	for {
 		text, err := utils.GetNewLine(reader)
 
+		message  := utils.UnMarshalMessage(text)
+
+		bodyText := `
+Severity: %s
+Message: %s
+Host: %s
+Created: %s
+`
+		bodyText     = fmt.Sprintf(bodyText, message.Severity, message.Message, message.HostName, message.Created)
+		subjectText := fmt.Sprintf("[%s] New alert from %s", message.Severity, message.HostName)
+		msgHeader   := fmt.Sprintf("To: %s\r\nSubject: %s\r\n", options.SendTo, subjectText)
+		msg         := msgHeader + "\r\n" + bodyText + "\r\n"
+
 		auth := smtp.PlainAuth(
 			"",
 			options.UserName,
@@ -31,10 +45,10 @@ func main() {
 			options.SmtpHost,
 		)
 
-		err = smtp.SendMail(options.SmtpHost + ":" + options.SmtpPort, auth,options.SendFrom, []string{options.SendTo}, []byte(text))
+		err = smtp.SendMail(options.SmtpHost + ":" + options.SmtpPort, auth,options.SendFrom, []string{options.SendTo}, []byte(msg))
 		utils.CatchError(err)
 
-		_, err = os.Stdout.WriteString(text + utils.EOT_S)
+		_, err = os.Stdout.WriteString(text)
 		utils.CatchError(err)
 	}
 }
