@@ -1,3 +1,5 @@
+###Warning. This repository is in BETA. Use at your own risk.
+
 ### Index
 
 - Metrics
@@ -23,6 +25,10 @@
     - [cm_o_telegram](#cm_o_telegram)
     - [cm_o_opsgenie](#cm_o_opsgenie)
     - [cm_o_smtp](#cm_o_smtp)
+
+### Overview
+
+Docs in progress. If you know Russian, you can read [this](https://habr.com/ru/post/454674/) post.
 
 ### Reference
 

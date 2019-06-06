@@ -32,11 +32,11 @@ func main() {
 			continue
 		}
 
-		bandwidth :=  int((val - prevVal) / now.Sub(start).Seconds())
+		bandwidth :=  int64((val - prevVal) / now.Sub(start).Seconds())
 		start      = time.Now()
 		prevVal    = val
 
-		_, err = os.Stdout.WriteString(strconv.Itoa(bandwidth) + utils.EOT_S)
+		_, err = os.Stdout.WriteString(strconv.FormatInt(bandwidth, 10) + utils.EOT_S)
 		utils.CatchError(err)
 	}
 }
