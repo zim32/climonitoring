@@ -17,6 +17,7 @@
     - [cm_p_message](#cm_p_message)
     - [cm_p_truncate](#cm_p_truncate)
     - [cm_p_watchdog](#cm_p_watchdog)
+    - [cm_p_bandwidth](#cm_p_bandwidth)
 - Outputs
     - [cm_o_telegram](#cm_o_telegram)
     - [cm_o_opsgenie](#cm_o_opsgenie)
@@ -169,6 +170,14 @@ Outputs "true" if no input is given for more than specified seconds. Useful to a
 Name | Description | Mandatory | Default
  --- | --- | --- | ---
 -i | Max no action interval, seconds | N | 10
+
+
+##### cm_p_bandwidth
+Outputs (input - prev_input) / time.  Useful for calculating bandwidth.
+
+F.e:
+
+    cm_m_procinfo -name '^chrome' | cm_p_eot2nl | jq -cM --unbuffered '.NetInBytes' | cm_p_nl2eot | cm_p_bandwidth | cm_p_eot2nl
 
 
 #### Outputs
