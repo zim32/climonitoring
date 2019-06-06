@@ -33,8 +33,6 @@ type ResultItem struct {
 	CoreDumping     int
 	NetInBytes      uint64
 	NetOutBytes     uint64
-	InBandwidth     uint64
-	OutBandwidth    uint64
 }
 
 func main() {
@@ -220,7 +218,7 @@ func parseOptions() *CliOptions {
 
 	intPtr1 := flag.Int("i", 1, "Update interval")
 	intPtr2 := utils.GetConfigInt("pid", -1, "Process PID", "procinfo")
-	strPtr := utils.GetConfigString("name", "", "Process name (regex pattern)", "procinfo")
+	strPtr  := utils.GetConfigString("name", "", "Process name (regex pattern)", "procinfo")
 
 	flag.Parse()
 
@@ -228,6 +226,9 @@ func parseOptions() *CliOptions {
 	options.Pid            = *intPtr2
 	options.Name           = *strPtr
 
+	if options.Pid == -1 && len(options.Name) == 0 {
+		panic("-pid or -name parameter required")
+	}
 
 	return options
 }

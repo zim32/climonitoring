@@ -5,6 +5,7 @@
     - [cm_m_filestat](#cm_m_filestat)
     - [cm_m_ram](#cm_m_ram)
     - [cm_m_tcp](#cm_m_tcp)
+    - [cm_m_procinfo](#cm_m_procinfo)
 - Filters
     - [cm_f_false](#cm_f_false)
     - [cm_f_true](#cm_f_true)
@@ -81,6 +82,40 @@ Name | Description | Mandatory | Default
 -i | Interval, seconds | N | 1
 -a | Address (host:port) | Y | ""
 -n | Network to use (tcp, udp) | N | "tcp"
+
+
+##### cm_m_procinfo  
+This metric collects information about process(es), specified by -pid parameter or -name parameter. 
+If pid is given, than only the process with this PID is monitored. If name given, than cm_m_procinfo will monitor all processes whose procname mathces given pattern (-name is regex patter), and all values will be sum of values of individual processes. 
+
+Parameters:
+
+Name | Description | Mandatory | Default
+ --- | --- | --- | ---
+-i | Interval, seconds | N | 1
+-pid | Process PID | N |
+-name | Regex pattern to match procname against | N |
+
+Example:
+````
+cm_m_procinfo -name '^chrome'
+{
+    "Pid":"10659|11680|11716|12318|12820|12850|15926|5912|5923|5927|5958|6013|7372",
+    "ProcessName":"",
+    "CommandLine":"",
+    "ProcessState":"",
+    "NumberOfThreads":173,
+    "MemRss":1709178880,
+    "MemRssAnon":890515456,
+    "MemRssFile":805199872,
+    "MemRssShared":13463552,
+    "MemRssOwn":1695715328,
+    "MemVirtual":11856023552,
+    "CoreDumping":0,
+    "NetInBytes":96580979009,
+    "NetOutBytes":96580979009
+    }
+````
 
 #### Filters
 
