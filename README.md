@@ -21,6 +21,7 @@
     - [cm_p_truncate](#cm_p_truncate)
     - [cm_p_watchdog](#cm_p_watchdog)
     - [cm_p_bandwidth](#cm_p_bandwidth)
+    - [cm_p_average](#cm_p_average)
 - Outputs
     - [cm_o_telegram](#cm_o_telegram)
     - [cm_o_opsgenie](#cm_o_opsgenie)
