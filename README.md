@@ -221,6 +221,17 @@ F.e:
     cm_m_procinfo -name '^chrome' | cm_p_eot2nl | jq -cM --unbuffered '.NetInBytes' | cm_p_nl2eot | cm_p_bandwidth | cm_p_eot2nl
 
 
+##### cm_p_average
+Outputs average of input values
+
+Parameters:
+
+Name | Description | Mandatory | Default
+ --- | --- | --- | ---
+-i | Time interval for averaging, seconds | N | 10 
+
+
+
 #### Outputs
 
 ##### cm_o_telegram  
