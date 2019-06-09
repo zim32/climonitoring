@@ -26,6 +26,7 @@
     - [cm_o_telegram](#cm_o_telegram)
     - [cm_o_opsgenie](#cm_o_opsgenie)
     - [cm_o_smtp](#cm_o_smtp)
+- [Examples](#examples)
 
 ### Overview
 
@@ -268,3 +269,20 @@ Name | Description | Mandatory | Default
 -userPass | SMTP user password | Y |
 -from | Send from | Y |
 -to | Send to | Y |
+
+
+#### Examples
+
+Monitor CPU load average
+````
+cm_m_cpu | cm_p_eot2nl | jq -cM --unbuffered 'if .LoadAvg1 > 1 then .LoadAvg1 else false end' | cm_p_nl2eot | cm_f_regex -e '\d+' | cm_p_debounce -i 60 | cm_p_message -m 'Load average is {stdin}' | cm_o_telegram
+````
+
+Monitor number of jobs ib RabbitMq queue
+````
+while true; do rabbitmqctl list_queues -p queue_name | grep -Po --line-buffered '\d+'; sleep 60; done | jq -cM '. > 10000' --unbuffered | cm_p_nl2eot | cm_f_true | cm_p_message -m 'There are more than 10000 tasks in rabbit queue' | cm_o_opsgenie
+````
+Monitor that nothing was written to file for more than 10 seconds
+````
+tail -f out.log | cm_p_nl2eot | cm_p_watchdog -i 10 | cm_p_debounce -i 3600 | cm_p_message -m 'No write to out.log for 10 seconds' -s 'alert' | cm_o_telegram
+````
