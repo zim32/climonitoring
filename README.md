@@ -183,7 +183,7 @@ Converts LF to EOT symbols. Use it to pipe data from other CLI commands
 
 ##### cm_p_message  
 Special processor. Use it before first output command. It will create json message in format needed for output commands.
-**There is a default limit of 60 messages per hour, to prevent self spamming. You can change it with -i parameter.**
+**There is a default limit of 60 messages per hour, to prevent self spamming. You can change it with -l parameter.**
 
 Parameters:
 
