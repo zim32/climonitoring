@@ -10,9 +10,9 @@ import (
 )
 
 type Result struct {
-	LoadAvg1  float32
-	LoadAvg2  float32
-	LoadAvg3  float32
+	LoadAvg1   float32
+	LoadAvg5   float32
+	LoadAvg15  float32
 }
 
 type CliOptions struct {
@@ -34,9 +34,9 @@ func main() {
 			panic(err)
 		}
 
-		result.LoadAvg1  = float32(sysInfo.Loads[0]) / LoadAvgShift
-		result.LoadAvg2  = float32(sysInfo.Loads[1]) / LoadAvgShift
-		result.LoadAvg3  = float32(sysInfo.Loads[2]) / LoadAvgShift
+		result.LoadAvg1   = float32(sysInfo.Loads[0]) / LoadAvgShift
+		result.LoadAvg5   = float32(sysInfo.Loads[1]) / LoadAvgShift
+		result.LoadAvg15  = float32(sysInfo.Loads[2]) / LoadAvgShift
 
 		// make json
 		b, err := json.Marshal(result)

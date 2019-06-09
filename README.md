@@ -49,7 +49,7 @@ Name | Description | Mandatory | Default
 
 Example:
 ````
-{"LoadAvg1":2.4023438,"LoadAvg2":2.2089844,"LoadAvg3":2.0039062}
+{"LoadAvg1":2.4023438,"LoadAvg5":2.2089844,"LoadAvg15":2.0039062}
 ````
 
 ##### cm_m_filestat  
