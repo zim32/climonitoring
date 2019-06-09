@@ -6,6 +6,7 @@ go build -o ./bin/cm_m_cpu ./metrics/cpu
 go build -o ./bin/cm_m_ram ./metrics/ram
 go build -o ./bin/cm_m_tcp ./metrics/tcp
 go build -o ./bin/cm_m_procinfo ./metrics/procinfo
+go build -o ./bin/cm_m_netstat ./metrics/netstat
 
 # filters
 go build -o ./bin/cm_f_false ./filters/false

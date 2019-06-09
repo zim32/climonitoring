@@ -8,6 +8,7 @@
     - [cm_m_ram](#cm_m_ram)
     - [cm_m_tcp](#cm_m_tcp)
     - [cm_m_procinfo](#cm_m_procinfo)
+    - [cm_m_netstat](#cm_m_netstat)
 - Filters
     - [cm_f_false](#cm_f_false)
     - [cm_f_true](#cm_f_true)
@@ -123,6 +124,21 @@ cm_m_procinfo -name '^chrome'
     "NetInBytes":96580979009,
     "NetOutBytes":96580979009
     }
+````
+
+
+##### cm_m_netstat
+Outputs network statistics
+
+Parameters:
+
+Name | Description | Mandatory | Default
+ --- | --- | --- | ---
+-i | Interval, seconds | N | 1
+
+Example output:
+````
+{"NetInBytes":4581044682,"NetOutBytes":4581044682}
 ````
 
 #### Filters
@@ -285,4 +301,8 @@ while true; do rabbitmqctl list_queues -p queue_name | grep -Po --line-buffered 
 Monitor that nothing was written to file for more than 10 seconds
 ````
 tail -f out.log | cm_p_nl2eot | cm_p_watchdog -i 10 | cm_p_debounce -i 3600 | cm_p_message -m 'No write to out.log for 10 seconds' -s 'alert' | cm_o_telegram
+````
+Monitor network input traffic
+````
+cm_m_netstat | cm_p_eot2nl | jq -cM --unbuffered '.NetInBytes' | cm_p_nl2eot | cm_p_bandwidth | cm_p_average | cm_p_eot2nl
 ````
