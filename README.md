@@ -182,7 +182,8 @@ Converts LF to EOT symbols. Use it to pipe data from other CLI commands
 
 
 ##### cm_p_message  
-Special processor. Use it before first output command. It will create json message in format needed for output commands
+Special processor. Use it before first output command. It will create json message in format needed for output commands.
+**There is a default limit of 60 messages per hour, to prevent self spamming. You can change it with -i parameter.**
 
 Parameters:
 
@@ -191,6 +192,7 @@ Name | Description | Mandatory | Default
 -m | Message. If specified, msg.Message field will contain this sting. {stdin} in replaced by input data. Otherwise input data is used | N | ""
 -s | Severity. One of ("debug", "info", "warn", "alert", "critical"). Actually you can use any string. But some output providers expect severity to be one of those mentioned above| N | "info 
 -h | Host name | N | OS hostname 
+-l | Max messages per hour. If more than -l messages received during hour, new messages will be dropped. Counter is reset every hour | N | 60 
 Example:
 ````
 echo "1111" | cm_p_message -m "Disk usage is: {stdin}" -s "alert"
