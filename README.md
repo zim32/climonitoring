@@ -13,6 +13,7 @@
     - [cm_f_false](#cm_f_false)
     - [cm_f_true](#cm_f_true)
     - [cm_f_regex](#cm_f_regex)
+    - [cm_f_enable](#cm_f_enable)
 - Processors
     - [cm_p_bulk](#cm_p_bulk)
     - [cm_p_debounce](#cm_p_debounce)
@@ -167,7 +168,23 @@ echo "123-345" | cm_f_regex -e '(\d+)-(\d+)' -o 'Whole match: {0}. Converted: {1
 Output: Whole match: 123-345. Converted: 123/345
 ````
 
+
+##### cm_f_enable  
+This filter reads content of file specified in -f parameter, compares it with -s string parameter and ignores input if they don't match.
+Useful to enable/disable monitoring at all, by putting some string in file.
+
+Parameters:
+
+Name | Description | Mandatory | Default
+ --- | --- | --- | ---
+-f | File path to read content from | Y |
+-s | String to be interpreted as true value | N | "1"
+
+
 #### Processors
+
+
+
 ##### cm_p_bulk  
 Buffer incoming data, and output it in bulks one at a time.
 

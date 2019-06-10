@@ -12,6 +12,7 @@ go build -o ./bin/cm_m_netstat ./metrics/netstat
 go build -o ./bin/cm_f_false ./filters/false
 go build -o ./bin/cm_f_true ./filters/true
 go build -o ./bin/cm_f_regex ./filters/regex
+go build -o ./bin/cm_f_enable ./filters/enable
 
 # processors
 go build -o ./bin/cm_p_bulk ./processors/bulk
