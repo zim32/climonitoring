@@ -323,3 +323,7 @@ Monitor network input traffic
 ````
 cm_m_netstat | cm_p_eot2nl | jq -cM --unbuffered '.NetInBytes' | cm_p_nl2eot | cm_p_bandwidth | cm_p_average | cm_p_eot2nl
 ````
+Monitor docker service is alive
+````
+while true; do systemctl show docker; sleep 10; done | cm_p_nl2eot | cm_f_regex -e 'ActiveState=(.*)' -o '{1}' | cm_f_regex -e 'active' --invert | cm_p_debounce -i 3600 | cm_p_message -m 'Docker engine is down. State: {stdin}' | cm_o_opsgenie
+````
