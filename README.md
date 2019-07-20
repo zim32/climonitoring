@@ -1,5 +1,3 @@
-### Warning. This repository is in BETA. Use at your own risk.
-
 ### Index
 
 - Metrics
