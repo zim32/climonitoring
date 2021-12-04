@@ -1,11 +1,12 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"bufio"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 func main() {

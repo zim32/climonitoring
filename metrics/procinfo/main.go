@@ -1,7 +1,6 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"encoding/json"
 	"flag"
 	"io/ioutil"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -24,11 +25,11 @@ type ResultItem struct {
 	CommandLine     string
 	ProcessState    string
 	NumberOfThreads int
-	MemRss			int64
-	MemRssAnon		int64
-	MemRssFile		int64
-	MemRssShared	int64
-	MemRssOwn		int64
+	MemRss          int64
+	MemRssAnon      int64
+	MemRssFile      int64
+	MemRssShared    int64
+	MemRssOwn       int64
 	MemVirtual      int64
 	CoreDumping     int
 	NetInBytes      uint64
@@ -47,7 +48,7 @@ func main() {
 			pids = getPidsByPattern(options.Name)
 		}
 
-		result  := new(ResultItem)
+		result := new(ResultItem)
 
 		for _, pid := range pids {
 			resultItem := new(ResultItem)
@@ -62,19 +63,19 @@ func main() {
 
 			resultItem.Pid = strconv.Itoa(pid)
 
-			result.Pid              += resultItem.Pid + "|"
-			result.CommandLine      += resultItem.CommandLine + "|"
-			result.MemRssShared     += resultItem.MemRssShared
-			result.MemRss		    += resultItem.MemRss
-			result.MemRssOwn        += resultItem.MemRssOwn
-			result.MemRssFile       += resultItem.MemRssFile
-			result.MemRssAnon       += resultItem.MemRssAnon
-			result.MemVirtual       += resultItem.MemVirtual
-			result.NumberOfThreads  += resultItem.NumberOfThreads
-			result.CoreDumping      += resultItem.CoreDumping
-			result.CommandLine      += resultItem.CommandLine
-			result.NetInBytes       += resultItem.NetInBytes
-			result.NetOutBytes      += resultItem.NetOutBytes
+			result.Pid += resultItem.Pid + "|"
+			result.CommandLine += resultItem.CommandLine + "|"
+			result.MemRssShared += resultItem.MemRssShared
+			result.MemRss += resultItem.MemRss
+			result.MemRssOwn += resultItem.MemRssOwn
+			result.MemRssFile += resultItem.MemRssFile
+			result.MemRssAnon += resultItem.MemRssAnon
+			result.MemVirtual += resultItem.MemVirtual
+			result.NumberOfThreads += resultItem.NumberOfThreads
+			result.CoreDumping += resultItem.CoreDumping
+			result.CommandLine += resultItem.CommandLine
+			result.NetInBytes += resultItem.NetInBytes
+			result.NetOutBytes += resultItem.NetOutBytes
 		}
 
 		result.Pid = strings.Trim(result.Pid, "|")
@@ -120,7 +121,7 @@ func getPidsByPattern(pattern string) []int {
 	return pids
 }
 
-func parseProcStatus(pid int, resultItem *ResultItem)  {
+func parseProcStatus(pid int, resultItem *ResultItem) {
 	b, err := ioutil.ReadFile("/proc/" + strconv.Itoa(pid) + "/status")
 	utils.CatchError(err)
 
@@ -193,7 +194,7 @@ func parseCommandLine(pid int, resultItem *ResultItem) {
 	resultItem.CommandLine = content
 }
 
-func parseProcNetstat(pid int, resultItem *ResultItem)  {
+func parseProcNetstat(pid int, resultItem *ResultItem) {
 	b, err := ioutil.ReadFile("/proc/" + strconv.Itoa(pid) + "/net/netstat")
 	utils.CatchError(err)
 
@@ -218,13 +219,13 @@ func parseOptions() *CliOptions {
 
 	intPtr1 := flag.Int("i", 1, "Update interval")
 	intPtr2 := utils.GetConfigInt("pid", -1, "Process PID", "procinfo")
-	strPtr  := utils.GetConfigString("name", "", "Process name (regex pattern)", "procinfo")
+	strPtr := utils.GetConfigString("name", "", "Process name (regex pattern)", "procinfo")
 
 	flag.Parse()
 
 	options.UpdateInterval = *intPtr1
-	options.Pid            = *intPtr2
-	options.Name           = *strPtr
+	options.Pid = *intPtr2
+	options.Name = *strPtr
 
 	if options.Pid == -1 && len(options.Name) == 0 {
 		panic("-pid or -name parameter required")

@@ -3,11 +3,12 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"climonitoring/utils"
 	"encoding/json"
 	"flag"
 	"net/http"
 	"os"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -18,9 +19,9 @@ type CliOptions struct {
 }
 
 type OpsGenieMessage struct {
-	Message     string 						`json:"message"`
-	Responders  []OpsGenieMessageResponder  `json:"responders"`
-	Entity      string 						`json:"entity"`
+	Message    string                     `json:"message"`
+	Responders []OpsGenieMessageResponder `json:"responders"`
+	Entity     string                     `json:"entity"`
 }
 
 type OpsGenieMessageResponder struct {
@@ -30,7 +31,7 @@ type OpsGenieMessageResponder struct {
 
 func main() {
 	options := parseOptions()
-	reader  := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 
 	for {
 		text, err := utils.GetNewLine(reader)
@@ -40,7 +41,7 @@ func main() {
 		// create ops message
 		opsMessage := new(OpsGenieMessage)
 		opsMessage.Message = message.Message
-		opsMessage.Entity  = message.HostName
+		opsMessage.Entity = message.HostName
 
 		responder := OpsGenieMessageResponder{Id: options.ResponderId, Type: options.ResponderType}
 		opsMessage.Responders = append(opsMessage.Responders, responder)
@@ -54,7 +55,7 @@ func main() {
 		utils.CatchError(err)
 
 		req.Header.Add("Content-Type", "application/json")
-		req.Header.Add("Authorization", "GenieKey " + options.ApiToken)
+		req.Header.Add("Authorization", "GenieKey "+options.ApiToken)
 
 		client := http.Client{}
 		_, err = client.Do(req)
@@ -75,10 +76,10 @@ func parseOptions() *CliOptions {
 
 	flag.Parse()
 
-	options.ApiToken      = *strPtr1
-	options.ApiEndpoint   = *strPtr2
+	options.ApiToken = *strPtr1
+	options.ApiEndpoint = *strPtr2
 	options.ResponderType = *strPtr3
-	options.ResponderId   = *strPtr4
+	options.ResponderId = *strPtr4
 
 	if len(options.ApiToken) == 0 {
 		panic("Api token required")
@@ -92,7 +93,6 @@ func parseOptions() *CliOptions {
 	if len(options.ResponderId) == 0 {
 		panic("ResponderId type required")
 	}
-
 
 	return options
 }

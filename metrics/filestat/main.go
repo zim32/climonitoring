@@ -1,27 +1,28 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"encoding/json"
 	"flag"
 	"os"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type Result struct {
-	Size int64
-	ModTime int64
+	Size       int64
+	ModTime    int64
 	HasChanged bool
 }
 
 type CliOptions struct {
 	UpdateInterval int
-	FilePath string
+	FilePath       string
 }
 
 func main() {
 	options := parseOptions()
-	result  := new(Result)
+	result := new(Result)
 
 	if len(options.FilePath) == 0 {
 		panic("File path required")
@@ -39,8 +40,8 @@ func main() {
 
 		fileInfo.Size()
 
-		result.Size       = fileInfo.Size()
-		result.ModTime    = fileInfo.ModTime().Unix()
+		result.Size = fileInfo.Size()
+		result.ModTime = fileInfo.ModTime().Unix()
 		result.HasChanged = oldResult.ModTime > 0 && result.ModTime != oldResult.ModTime
 
 		// make json
@@ -62,11 +63,10 @@ func parseOptions() *CliOptions {
 	intPtr := utils.GetConfigInt("i", 1, "Update interval", "filestat")
 	strPtr := utils.GetConfigString("f", "", "File path", "filestat")
 
-
 	flag.Parse()
 
 	options.UpdateInterval = *intPtr
-	options.FilePath       = *strPtr
+	options.FilePath = *strPtr
 
 	return options
 }

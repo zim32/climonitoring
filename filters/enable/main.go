@@ -2,12 +2,13 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"flag"
-	"github.com/fsnotify/fsnotify"
 	"io/ioutil"
 	"os"
 	"strings"
+
+	"github.com/fsnotify/fsnotify"
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -19,7 +20,7 @@ var fileContent string
 
 func main() {
 	options := parseOptions()
-	reader  := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 
 	readFileContent(options.FilePath)
 
@@ -30,25 +31,24 @@ func main() {
 		// watch for content file changes
 		for {
 			select {
-				case event, ok := <-watcher.Events:
-					if !ok {
-						return
-					}
-					if event.Op & fsnotify.Write == fsnotify.Write {
-						readFileContent(options.FilePath)
-					}
-				case err, ok := <-watcher.Errors:
-					if !ok {
-						return
-					}
-					utils.CatchError(err)
+			case event, ok := <-watcher.Events:
+				if !ok {
+					return
+				}
+				if event.Op&fsnotify.Write == fsnotify.Write {
+					readFileContent(options.FilePath)
+				}
+			case err, ok := <-watcher.Errors:
+				if !ok {
+					return
+				}
+				utils.CatchError(err)
 			}
 		}
 	}()
 
 	err = watcher.Add(options.FilePath)
 	utils.CatchError(err)
-
 
 	for {
 		text, err := utils.GetNewLine(reader)
@@ -78,7 +78,7 @@ func parseOptions() *CliOptions {
 	flag.Parse()
 
 	options.FilePath = *strPtr1
-	options.TrueVal  = *strPtr2
+	options.TrueVal = *strPtr2
 
 	utils.ValidateEmptyString(options.FilePath, "File path required")
 

@@ -1,11 +1,12 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"flag"
 	"net"
 	"os"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -43,15 +44,15 @@ func main() {
 func parseOptions() *CliOptions {
 	options := new(CliOptions)
 
-	intPtr  := utils.GetConfigInt("i", 1, "Update interval", "tcp")
-	strPtr  := utils.GetConfigString("a", "", "Address (host:port)", "tcp")
+	intPtr := utils.GetConfigInt("i", 1, "Update interval", "tcp")
+	strPtr := utils.GetConfigString("a", "", "Address (host:port)", "tcp")
 	strPtr2 := utils.GetConfigString("n", "tcp", "Network to use", "tcp")
 
 	flag.Parse()
 
 	options.UpdateInterval = *intPtr
-	options.Address        = *strPtr
-	options.Network        = *strPtr2
+	options.Address = *strPtr
+	options.Network = *strPtr2
 
 	return options
 }

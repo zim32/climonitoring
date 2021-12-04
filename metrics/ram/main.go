@@ -1,7 +1,6 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"encoding/json"
 	"flag"
 	"io/ioutil"
@@ -9,6 +8,8 @@ import (
 	"regexp"
 	"strconv"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type Result struct {
@@ -26,7 +27,7 @@ type CliOptions struct {
 
 func main() {
 	options := parseOptions()
-	result  := new(Result)
+	result := new(Result)
 
 	for {
 		b, err := ioutil.ReadFile("/proc/meminfo")
@@ -34,27 +35,27 @@ func main() {
 
 		content := string(b)
 
-		r, _  := regexp.Compile(`MemFree:\s+(\d+)`)
+		r, _ := regexp.Compile(`MemFree:\s+(\d+)`)
 		match := r.FindStringSubmatch(content)
 		intVal, _ := strconv.Atoi(match[1])
 		result.FreeRam = uint64(intVal * 1024)
 
-		r, _  = regexp.Compile(`MemTotal:\s+(\d+)`)
+		r, _ = regexp.Compile(`MemTotal:\s+(\d+)`)
 		match = r.FindStringSubmatch(content)
 		intVal, _ = strconv.Atoi(match[1])
 		result.TotalRam = uint64(intVal * 1024)
 
-		r, _  = regexp.Compile(`MemAvailable:\s+(\d+)`)
+		r, _ = regexp.Compile(`MemAvailable:\s+(\d+)`)
 		match = r.FindStringSubmatch(content)
 		intVal, _ = strconv.Atoi(match[1])
 		result.AvailRam = uint64(intVal * 1024)
 
-		r, _  = regexp.Compile(`Buffers:\s+(\d+)`)
+		r, _ = regexp.Compile(`Buffers:\s+(\d+)`)
 		match = r.FindStringSubmatch(content)
 		intVal, _ = strconv.Atoi(match[1])
 		result.BuffersRam = uint64(intVal * 1024)
 
-		r, _  = regexp.Compile(`Cached:\s+(\d+)`)
+		r, _ = regexp.Compile(`Cached:\s+(\d+)`)
 		match = r.FindStringSubmatch(content)
 		intVal, _ = strconv.Atoi(match[1])
 		result.CacheRam = uint64(intVal * 1024)

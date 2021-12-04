@@ -1,7 +1,6 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"encoding/json"
 	"flag"
 	"io/ioutil"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type Result struct {

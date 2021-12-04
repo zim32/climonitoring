@@ -1,11 +1,12 @@
 package main
 
 import (
-	"climonitoring/utils"
 	"bufio"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 func main() {
@@ -15,7 +16,7 @@ func main() {
 		text, err := reader.ReadString('\n')
 		utils.CatchEof(err, text)
 
-		text = strings.Replace(text,"\n", utils.EOT_S, -1)
+		text = strings.Replace(text, "\n", utils.EOT_S, -1)
 
 		_, err = os.Stdout.WriteString(text)
 

@@ -3,27 +3,27 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"climonitoring/utils"
 	"flag"
 	"os"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
-	BufferSize int
+	BufferSize    int
 	FlushInterval int
 }
 
 func main() {
-	options   := parseOptions()
-	buffer    := make([]string, 0)
-	reader    := bufio.NewReader(os.Stdin)
-	mutex     := new(sync.Mutex)
+	options := parseOptions()
+	buffer := make([]string, 0)
+	reader := bufio.NewReader(os.Stdin)
+	mutex := new(sync.Mutex)
 
 	var flushTime int64 = 0
-
 
 	if options.FlushInterval > 0 {
 		// flush loop
@@ -54,7 +54,7 @@ func main() {
 
 		mutex.Lock()
 
-		buffer    = append(buffer, strings.Trim(text, utils.EOT_S))
+		buffer = append(buffer, strings.Trim(text, utils.EOT_S))
 		flushTime = time.Now().Unix()
 
 		if len(buffer) >= options.BufferSize {
@@ -65,7 +65,7 @@ func main() {
 	}
 }
 
-func flushBuffer(buffer *[]string)  {
+func flushBuffer(buffer *[]string) {
 	result := new(bytes.Buffer)
 
 	for _, line := range *buffer {
@@ -81,12 +81,12 @@ func flushBuffer(buffer *[]string)  {
 func parseOptions() *CliOptions {
 	options := new(CliOptions)
 
-	intPtr  := utils.GetConfigInt("s", 10, "Buffer size", "bulk")
+	intPtr := utils.GetConfigInt("s", 10, "Buffer size", "bulk")
 	intPtr2 := utils.GetConfigInt("fi", 0, "Max flush interval (seconds)", "bulk")
 
 	flag.Parse()
 
-	options.BufferSize    = *intPtr
+	options.BufferSize = *intPtr
 	options.FlushInterval = *intPtr2
 
 	return options

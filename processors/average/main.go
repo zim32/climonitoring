@@ -2,12 +2,13 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"flag"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -16,24 +17,24 @@ type CliOptions struct {
 
 func main() {
 	options := parseOptions()
-	reader  := bufio.NewReader(os.Stdin)
-	start   := time.Now()
+	reader := bufio.NewReader(os.Stdin)
+	start := time.Now()
 
 	var buffer []float64
 
 	for {
 		text, err := utils.GetNewLine(reader)
-		now       := time.Now()
+		now := time.Now()
 
 		val, err := strconv.ParseFloat(strings.Trim(text, utils.EOT_S), 64)
 		utils.CatchError(err)
 
 		buffer = append(buffer, val)
 
-		if uint(now.Unix() - start.Unix()) > options.TimeInterval {
+		if uint(now.Unix()-start.Unix()) > options.TimeInterval {
 			avg := int64(calculateAverage(&buffer))
 
-			start  = now
+			start = now
 			buffer = nil
 
 			_, err = os.Stdout.WriteString(strconv.FormatInt(avg, 10) + utils.EOT_S)

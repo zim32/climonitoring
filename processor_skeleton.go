@@ -2,9 +2,10 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"flag"
 	"os"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -13,7 +14,7 @@ type CliOptions struct {
 
 func main() {
 	//options := parseOptions()
-	reader  := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 
 	for {
 		text, err := utils.GetNewLine(reader)
@@ -31,7 +32,6 @@ func parseOptions() *CliOptions {
 	flag.Parse()
 
 	options.SomeOption = int64(*intPtr)
-
 
 	return options
 }

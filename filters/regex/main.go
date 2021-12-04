@@ -2,29 +2,29 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"flag"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
 	Pattern     string
 	OutTemplate string
-	Invert		bool
+	Invert      bool
 }
-
 
 func main() {
 	options := parseOptions()
-	reader  := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 
 	for {
 		text, err := utils.GetNewLine(reader)
 
-		val   := strings.Trim(text, utils.EOT_S)
+		val := strings.Trim(text, utils.EOT_S)
 		regex := regexp.MustCompile(options.Pattern)
 
 		if len(options.OutTemplate) > 0 {
@@ -47,7 +47,7 @@ func main() {
 			outString := options.OutTemplate
 
 			for i, val := range matches {
-				outString = strings.Replace(outString, "{" + strconv.Itoa(i) + "}", val, -1)
+				outString = strings.Replace(outString, "{"+strconv.Itoa(i)+"}", val, -1)
 			}
 
 			_, err = os.Stdout.WriteString(outString + utils.EOT_S)
@@ -70,15 +70,15 @@ func main() {
 func parseOptions() *CliOptions {
 	options := new(CliOptions)
 
-	strPtr1 := utils.GetConfigString("e", ".*", "Pattern","regex")
+	strPtr1 := utils.GetConfigString("e", ".*", "Pattern", "regex")
 	strPtr2 := utils.GetConfigString("o", "", "Output template", "regex")
 	booPtr1 := utils.GetConfigBool("invert", false, "Invert", "regex")
 
 	flag.Parse()
 
-	options.Pattern     = *strPtr1
+	options.Pattern = *strPtr1
 	options.OutTemplate = *strPtr2
-	options.Invert      = *booPtr1
+	options.Invert = *booPtr1
 
 	return options
 }

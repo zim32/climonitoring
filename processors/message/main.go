@@ -2,13 +2,14 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -18,13 +19,12 @@ type CliOptions struct {
 	MessagesPerHour int
 }
 
-
 func main() {
-	reader          := bufio.NewReader(os.Stdin)
-	options         := parseOptions()
-	hourCounter     := time.Now()
+	reader := bufio.NewReader(os.Stdin)
+	options := parseOptions()
+	hourCounter := time.Now()
 	messagesCounter := int64(0)
-	limitReached    := false
+	limitReached := false
 
 	for {
 		text, err := utils.GetNewLine(reader)
@@ -32,8 +32,8 @@ func main() {
 		// reset messages counter every hour
 		if time.Now().Sub(hourCounter).Hours() > 1 {
 			messagesCounter = 0
-			hourCounter     = time.Now()
-			limitReached    = false
+			hourCounter = time.Now()
+			limitReached = false
 		}
 
 		if limitReached {
@@ -57,8 +57,8 @@ func main() {
 
 		msg := utils.NewMessage()
 		msg.Severity = options.Severity
-		msg.Message  = messageText
-		msg.Created  = time.Now()
+		msg.Message = messageText
+		msg.Created = time.Now()
 
 		if len(options.HostName) > 0 {
 			msg.HostName = options.HostName
@@ -83,7 +83,7 @@ func parseOptions() *CliOptions {
 
 	flag.Parse()
 
-	options.Message  = *strPtrM
+	options.Message = *strPtrM
 	options.Severity = *strPtrS
 	options.HostName = *strPtrH
 	options.MessagesPerHour = *intPtr1

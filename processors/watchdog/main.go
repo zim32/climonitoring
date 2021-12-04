@@ -2,10 +2,11 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"flag"
 	"os"
 	"time"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -13,13 +14,13 @@ type CliOptions struct {
 }
 
 func main() {
-	options  := parseOptions()
-	reader   := bufio.NewReader(os.Stdin)
+	options := parseOptions()
+	reader := bufio.NewReader(os.Stdin)
 	lastTime := time.Now().Unix()
 
 	go func() {
 		for {
-			if time.Now().Unix() - lastTime > options.MaxInterval {
+			if time.Now().Unix()-lastTime > options.MaxInterval {
 				_, err := os.Stdout.WriteString("true" + utils.EOT_S)
 				utils.CatchError(err)
 			}
@@ -42,7 +43,6 @@ func parseOptions() *CliOptions {
 	flag.Parse()
 
 	options.MaxInterval = int64(*intPtr)
-
 
 	return options
 }

@@ -2,11 +2,12 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"flag"
 	"fmt"
 	"net/smtp"
 	"os"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -20,12 +21,12 @@ type CliOptions struct {
 
 func main() {
 	options := parseOptions()
-	reader  := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 
 	for {
 		text, err := utils.GetNewLine(reader)
 
-		message  := utils.UnMarshalMessage(text)
+		message := utils.UnMarshalMessage(text)
 
 		bodyText := `
 Severity: %s
@@ -33,10 +34,10 @@ Message: %s
 Host: %s
 Created: %s
 `
-		bodyText     = fmt.Sprintf(bodyText, message.Severity, message.Message, message.HostName, message.Created)
+		bodyText = fmt.Sprintf(bodyText, message.Severity, message.Message, message.HostName, message.Created)
 		subjectText := fmt.Sprintf("[%s] New alert from %s", message.Severity, message.HostName)
-		msgHeader   := fmt.Sprintf("To: %s\r\nSubject: %s\r\n", options.SendTo, subjectText)
-		msg         := msgHeader + "\r\n" + bodyText + "\r\n"
+		msgHeader := fmt.Sprintf("To: %s\r\nSubject: %s\r\n", options.SendTo, subjectText)
+		msg := msgHeader + "\r\n" + bodyText + "\r\n"
 
 		auth := smtp.PlainAuth(
 			"",
@@ -45,7 +46,7 @@ Created: %s
 			options.SmtpHost,
 		)
 
-		err = smtp.SendMail(options.SmtpHost + ":" + options.SmtpPort, auth,options.SendFrom, []string{options.SendTo}, []byte(msg))
+		err = smtp.SendMail(options.SmtpHost+":"+options.SmtpPort, auth, options.SendFrom, []string{options.SendTo}, []byte(msg))
 		utils.CatchError(err)
 
 		_, err = os.Stdout.WriteString(text)
@@ -65,12 +66,12 @@ func parseOptions() *CliOptions {
 
 	flag.Parse()
 
-	options.SmtpHost     = *strPtr1
-	options.SmtpPort     = *strPtr2
-	options.UserName     = *strPtr3
+	options.SmtpHost = *strPtr1
+	options.SmtpPort = *strPtr2
+	options.UserName = *strPtr3
 	options.UserPassword = *strPtr4
-	options.SendFrom     = *strPtr5
-	options.SendTo       = *strPtr6
+	options.SendFrom = *strPtr5
+	options.SendTo = *strPtr6
 
 	utils.ValidateEmptyString(options.SmtpHost, "SMTP host required")
 	utils.ValidateEmptyString(options.SmtpPort, "SMTP port required")

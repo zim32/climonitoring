@@ -2,10 +2,11 @@ package main
 
 import (
 	"bufio"
-	"climonitoring/utils"
 	"flag"
 	"os"
 	"strings"
+
+	"github.com/zim32/climonitoring/utils"
 )
 
 type CliOptions struct {
@@ -14,7 +15,7 @@ type CliOptions struct {
 
 func main() {
 	options := parseOptions()
-	reader  := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 
 	for {
 		text, err := utils.GetNewLine(reader)
@@ -33,7 +34,7 @@ func main() {
 func parseOptions() *CliOptions {
 	options := new(CliOptions)
 
-	intPtr  := utils.GetConfigInt("l", 0, "Max length", "truncate")
+	intPtr := utils.GetConfigInt("l", 0, "Max length", "truncate")
 
 	flag.Parse()
 
