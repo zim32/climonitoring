@@ -5,12 +5,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/go-ini/ini"
 	"io"
 	"log"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/go-ini/ini"
 )
 
 const EOT_B = 4
@@ -62,12 +63,16 @@ func CatchEof(err error, text string) {
 
 func FileExists(path string) (bool, error) {
 	_, err := os.Stat(path)
-	if err == nil { return true, nil }
-	if os.IsNotExist(err) { return false, nil }
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
 	return true, err
 }
 
-func getConfigFilePath() (string, bool)  {
+func getConfigFilePath() (string, bool) {
 	var iniFile string
 
 	if ok, _ := FileExists("cm.config.ini"); ok {
@@ -83,7 +88,7 @@ func getConfigFilePath() (string, bool)  {
 	return iniFile, true
 }
 
-func GetIniString(section string, key string, def string) string  {
+func GetIniString(section string, key string, def string) string {
 	if iniFile, ok := getConfigFilePath(); ok {
 		cfg, err := ini.Load(iniFile)
 		if err != nil {
@@ -96,7 +101,7 @@ func GetIniString(section string, key string, def string) string  {
 	}
 }
 
-func GetIniInt(section string, key string, def int) int  {
+func GetIniInt(section string, key string, def int) int {
 	if iniFile, ok := getConfigFilePath(); ok {
 		cfg, err := ini.Load(iniFile)
 		if err != nil {
@@ -109,7 +114,7 @@ func GetIniInt(section string, key string, def int) int  {
 	}
 }
 
-func GetIniBool(section string, key string, def bool) bool  {
+func GetIniBool(section string, key string, def bool) bool {
 	if iniFile, ok := getConfigFilePath(); ok {
 		cfg, err := ini.Load(iniFile)
 		if err != nil {
@@ -122,24 +127,23 @@ func GetIniBool(section string, key string, def bool) bool  {
 	}
 }
 
-func GetConfigString(name string, def string, usage string, section string) *string  {
+func GetConfigString(name string, def string, usage string, section string) *string {
 	defVal := GetIniString(section, name, def)
-	ptr    := flag.String(name, defVal, usage)
+	ptr := flag.String(name, defVal, usage)
 
 	return ptr
 }
 
-
-func GetConfigInt(name string, def int, usage string, section string) *int  {
+func GetConfigInt(name string, def int, usage string, section string) *int {
 	defVal := GetIniInt(section, name, def)
-	ptr    := flag.Int(name, defVal, usage)
+	ptr := flag.Int(name, defVal, usage)
 
 	return ptr
 }
 
-func GetConfigBool(name string, def bool, usage string, section string) *bool  {
+func GetConfigBool(name string, def bool, usage string, section string) *bool {
 	defVal := GetIniBool(section, name, def)
-	ptr    := flag.Bool(name, defVal, usage)
+	ptr := flag.Bool(name, defVal, usage)
 
 	return ptr
 }

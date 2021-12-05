@@ -23,6 +23,7 @@ go build -linkshared -o ./bin/cm_p_nl2eot ./processors/nl2eot
 go build -linkshared -o ./bin/cm_p_debounce ./processors/debounce
 go build -linkshared -o ./bin/cm_p_truncate ./processors/truncate
 go build -linkshared -o ./bin/cm_p_watchdog ./processors/watchdog
+go build -linkshared -o ./bin/cm_p_multiline ./processors/multiline
 
 # outputs
 go build -linkshared -o ./bin/cm_o_telegram ./outputs/telegram

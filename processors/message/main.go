@@ -55,6 +55,10 @@ func main() {
 
 		messageText = strings.Replace(messageText, "{stdin}", strings.Trim(text, utils.EOT_S), -1)
 
+		if len(messageText) == 0 {
+			continue
+		}
+
 		msg := utils.NewMessage()
 		msg.Severity = options.Severity
 		msg.Message = messageText

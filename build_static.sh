@@ -24,6 +24,7 @@ go build -o ./bin/cm_p_truncate ./processors/truncate
 go build -o ./bin/cm_p_watchdog ./processors/watchdog
 go build -o ./bin/cm_p_bandwidth ./processors/bandwidth
 go build -o ./bin/cm_p_average ./processors/average
+go build -o ./bin/cm_p_multiline ./processors/multiline
 
 # outputs
 go build -o ./bin/cm_o_telegram ./outputs/telegram
