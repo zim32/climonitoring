@@ -22,6 +22,7 @@
     - [cm_p_watchdog](#cm_p_watchdog)
     - [cm_p_bandwidth](#cm_p_bandwidth)
     - [cm_p_average](#cm_p_average)
+    - [cm_p_multiline](#cm_p_multiline)
 - Outputs
     - [cm_o_telegram](#cm_o_telegram)
     - [cm_o_opsgenie](#cm_o_opsgenie)
@@ -265,6 +266,34 @@ Name | Description | Mandatory | Default
  --- | --- | --- | ---
 -i | Time interval for averaging, seconds | N | 10 
 
+
+##### cm_p_multiline
+Search input using provided regex pattern and insert EOT (End-Of-Transition) character before matched elements.
+Use multiline processor when you need to properly handle multiline logs.
+
+TODO: write more about EOT character and new line processing.
+
+F.e. suppose your log file contains this text:
+
+```
+[error] This is some multiline
+log message.
+Here is another line
+[warning] This is another message
+with text in another line
+```
+
+And you want log messages to be splited by [level] block. You can do it like this (simplified ):
+
+```
+tail -F test.log | cm_p_multiline -p '\[(error|warning)\]' | cm_p_message | cm_o_telegram
+```
+
+Parameters:
+
+Name | Description | Mandatory | Default
+ --- | --- | --- | ---
+-p | Regex pattern to search | Y | 
 
 
 #### Outputs
